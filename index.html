@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciate.us — Paga menos cada mes con buen crédito</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════
+   TOKENS — WARM, LATIN-FRIENDLY PALETTE
+══════════════════════════════════════ */
+:root {
+  /* Warm dark bg instead of cold black */
+  --bg:       #111008;
+  --bg2:      #1A1608;
+  --bg3:      #221E0C;
+  --surface:  #2A2510;
+
+  /* Cream — warmer, more legible */
+  --cream:    #F5F0E0;
+  --cream2:   #EDE6CC;
+  --muted:    rgba(245,240,224,0.58);
+  --faint:    rgba(245,240,224,0.1);
+
+  /* Gold — richer, more amber */
+  --gold:     #D4941A;
+  --gold-lt:  #F0B83A;
+  --gold-dim: rgba(212,148,26,0.18);
+  --border:   rgba(212,148,26,0.28);
+
+  /* Green — warmer, more trust */
+  --green:    #1E7A4A;
+  --green-lt: #3DC278;
+  --green-dim:rgba(30,122,74,0.18);
+
+  /* Red accent for savings callouts */
+  --red:      #C0392B;
+  --red-dim:  rgba(192,57,43,0.15);
+
+  /* Base sizes — larger across the board */
+  --text-base: 17px;
+  --text-sm:   15px;
+  --text-xs:   13px;
+}
+
+/* ══════════════════════════════════════ BASE ══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Nunito', sans-serif;
+  font-size:var(--text-base);
+  background:var(--bg);
+  color:var(--cream);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a { color:inherit; text-decoration:none; }
+button { font-family:'Nunito',sans-serif; cursor:pointer; border:none; background:none; }
+input  { font-family:'Nunito',sans-serif; border:none; outline:none; }
+
+/* subtle warm grain */
+body::after {
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.3;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+/* ══════════ UTILITY ══════════ */
+.max { max-width:1080px; margin:0 auto; }
+.section-tag {
+  display:inline-block;
+  font-size:12px; font-weight:800; letter-spacing:3px; text-transform:uppercase;
+  color:var(--gold-lt); margin-bottom:14px;
+}
+.section-h {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,4.5vw,58px);
+  font-weight:900; line-height:1.08; color:var(--cream);
+  margin-bottom:18px;
+}
+.section-sub {
+  font-size:var(--text-base); color:var(--muted); line-height:1.75;
+}
+.reveal {
+  opacity:0; transform:translateY(20px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.in { opacity:1; transform:translateY(0); }
+
+/* ══════════ NAV ══════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:16px 48px;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(17,16,8,.92); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:26px; font-weight:900; color:var(--gold-lt);
+}
+.logo span { color:var(--cream); font-weight:700; }
+.nav-links { display:flex; gap:28px; }
+.nav-links a { font-size:var(--text-sm); font-weight:700; color:var(--muted); transition:color .2s; }
+.nav-links a:hover { color:var(--cream); }
+.nav-btn {
+  background:var(--gold); color:#0A0800;
+  padding:11px 24px; border-radius:100px;
+  font-size:var(--text-sm); font-weight:800;
+  transition:all .2s;
+}
+.nav-btn:hover { background:var(--gold-lt); transform:translateY(-1px); }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  align-items:center; gap:64px;
+  padding:140px 48px 100px;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-100px; right:-80px;
+  width:700px; height:700px;
+  background:radial-gradient(circle, rgba(212,148,26,.1) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero::after {
+  content:''; position:absolute; bottom:-60px; left:-40px;
+  width:500px; height:500px;
+  background:radial-gradient(circle, rgba(30,122,74,.08) 0%, transparent 65%);
+  pointer-events:none;
+}
+
+.hero-left { position:relative; z-index:2; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--gold-dim); border:1px solid var(--border);
+  border-radius:100px; padding:8px 18px;
+  font-size:13px; font-weight:800; color:var(--gold-lt);
+  letter-spacing:.5px; text-transform:uppercase; margin-bottom:28px;
+}
+.live-dot {
+  width:8px; height:8px; border-radius:50%; background:var(--green-lt);
+  box-shadow:0 0 8px var(--green-lt); animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(42px,5.5vw,68px);
+  font-weight:900; line-height:1.03; color:var(--cream); margin-bottom:22px;
+}
+h1 .gold { color:var(--gold-lt); }
+h1 .block { display:block; }
+
+/* THE KEY MESSAGE - monthly payment */
+.hero-payment-hook {
+  background:linear-gradient(135deg, rgba(30,122,74,.2), rgba(30,122,74,.06));
+  border:1px solid rgba(61,194,120,.3);
+  border-radius:14px; padding:20px 24px; margin-bottom:28px;
+}
+.hph-title {
+  font-size:15px; font-weight:800; color:var(--green-lt); margin-bottom:12px;
+  text-transform:uppercase; letter-spacing:.5px;
+}
+.hph-compare {
+  display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center;
+}
+.hph-bad {
+  background:rgba(192,57,43,.12); border:1px solid rgba(192,57,43,.3);
+  border-radius:10px; padding:12px 14px; text-align:center;
+}
+.hph-good {
+  background:rgba(30,122,74,.15); border:1px solid rgba(61,194,120,.3);
+  border-radius:10px; padding:12px 14px; text-align:center;
+}
+.hph-label { font-size:12px; color:var(--muted); font-weight:600; margin-bottom:4px; }
+.hph-amount { font-family:'Playfair Display',serif; font-size:26px; font-weight:900; line-height:1; }
+.hph-bad .hph-amount { color:#E07070; }
+.hph-good .hph-amount { color:var(--green-lt); }
+.hph-desc { font-size:11px; color:var(--muted); margin-top:3px; }
+.hph-arrow { font-size:22px; color:var(--gold-lt); font-weight:900; }
+.hph-footer {
+  font-size:13px; color:var(--muted); margin-top:12px; text-align:center;
+}
+.hph-footer strong { color:var(--cream); }
+
+.hero-sub {
+  font-size:17px; color:var(--muted); max-width:480px;
+  line-height:1.75; margin-bottom:36px;
+}
+
+.cta-row { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px; }
+.btn-gold {
+  background:var(--gold); color:#0A0800;
+  padding:16px 32px; border-radius:100px;
+  font-size:16px; font-weight:800;
+  display:flex; align-items:center; gap:8px;
+  box-shadow:0 8px 28px rgba(212,148,26,.3);
+  transition:all .25s;
+}
+.btn-gold:hover { background:var(--gold-lt); transform:translateY(-2px); }
+.btn-ghost {
+  border:1.5px solid var(--border); color:var(--cream);
+  padding:16px 28px; border-radius:100px;
+  font-size:16px; font-weight:700;
+  display:flex; align-items:center; gap:8px;
+  transition:all .25s; background:transparent;
+}
+.btn-ghost:hover { border-color:var(--gold-lt); color:var(--gold-lt); transform:translateY(-2px); }
+
+.trust-row { display:flex; align-items:center; gap:16px; }
+.trust-flags { font-size:22px; letter-spacing:3px; }
+.trust-text { font-size:var(--text-sm); color:var(--muted); line-height:1.5; }
+.trust-text strong { color:var(--cream); }
+
+/* ══════════ HERO RIGHT — METHOD CARD ══════════ */
+.method-card {
+  background:linear-gradient(150deg, var(--bg2), var(--bg3));
+  border:1px solid var(--border); border-radius:24px;
+  padding:36px 32px;
+  box-shadow:0 40px 80px rgba(0,0,0,.6);
+  position:relative; overflow:hidden;
+}
+.method-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+}
+.mc-label {
+  font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:18px;
+}
+
+/* score big */
+.score-hero {
+  display:flex; align-items:flex-end; gap:14px; margin-bottom:8px;
+}
+.score-big {
+  font-family:'Playfair Display',serif;
+  font-size:92px; font-weight:900; line-height:1;
+  color:var(--gold-lt);
+  text-shadow:0 0 60px rgba(212,148,26,.4);
+}
+.score-side { padding-bottom:14px; }
+.score-label { font-size:var(--text-sm); color:var(--muted); font-weight:600; }
+.score-range { font-size:12px; color:rgba(245,240,224,.3); margin-top:3px; }
+
+.score-bar-wrap { margin-bottom:24px; }
+.score-bar-track {
+  height:8px; background:rgba(255,255,255,.07); border-radius:100px; overflow:hidden; margin-bottom:8px;
+}
+.score-bar-fill {
+  height:100%; border-radius:100px;
+  background:linear-gradient(90deg, var(--green-lt), var(--gold-lt));
+  width:0%; transition:width 2.2s cubic-bezier(.22,1,.36,1);
+}
+.score-bar-labels {
+  display:flex; justify-content:space-between;
+  font-size:12px; color:rgba(245,240,224,.3); font-weight:600;
+}
+
+/* savings boxes */
+.savings-boxes {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px;
+}
+.sbox {
+  border-radius:12px; padding:14px 16px;
+  background:var(--green-dim); border:1px solid rgba(61,194,120,.22);
+}
+.sbox-icon  { font-size:20px; margin-bottom:6px; }
+.sbox-label { font-size:12px; color:var(--muted); font-weight:600; margin-bottom:3px; }
+.sbox-save  { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--green-lt); }
+.sbox-desc  { font-size:12px; color:var(--muted); margin-top:2px; }
+
+/* steps */
+.mc-steps { display:flex; flex-direction:column; gap:0; margin-bottom:22px; }
+.mcs {
+  display:grid; grid-template-columns:32px 1fr auto; gap:12px; align-items:center;
+  padding:11px 0; border-bottom:1px solid var(--faint);
+}
+.mcs:last-child { border-bottom:none; }
+.mcs-num {
+  width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:800; flex-shrink:0;
+}
+.mcs-num.done   { background:var(--green-lt); color:#0A0800; }
+.mcs-num.active { background:var(--gold); color:#0A0800; }
+.mcs-num.next   { border:1.5px solid var(--faint); color:var(--muted); }
+.mcs-title { font-size:var(--text-sm); font-weight:700; color:var(--cream); }
+.mcs-sub   { font-size:12px; color:var(--muted); margin-top:1px; }
+.mcs-score { font-size:var(--text-sm); font-weight:800; color:var(--gold-lt); }
+.mcs-score.dim { color:var(--muted); }
+
+.mc-proof {
+  background:var(--green-dim); border:1px solid rgba(61,194,120,.2);
+  border-radius:10px; padding:14px 16px;
+  font-size:var(--text-sm); color:rgba(245,240,224,.8);
+  display:flex; align-items:center; gap:10px;
+  font-weight:600;
+}
+.mc-proof strong { color:var(--cream); }
+
+/* ══════════════════════════════════════
+   SAVINGS SECTION — THE CORE MESSAGE
+══════════════════════════════════════ */
+.savings-section {
+  padding:88px 48px;
+  background:var(--bg2);
+  border-top:1px solid var(--faint);
+}
+.savings-section .section-h { font-size:clamp(34px,4vw,54px); }
+.savings-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:20px; margin-top:48px;
+}
+.scard {
+  border-radius:20px; padding:36px 30px;
+  position:relative; overflow:hidden;
+  transition:transform .3s;
+}
+.scard:hover { transform:translateY(-5px); }
+.scard-car     { background:linear-gradient(145deg,rgba(30,122,74,.18),rgba(30,122,74,.06)); border:1px solid rgba(61,194,120,.25); }
+.scard-house   { background:linear-gradient(145deg,rgba(212,148,26,.16),rgba(212,148,26,.04)); border:1px solid rgba(212,148,26,.25); }
+.scard-rate    { background:linear-gradient(145deg,rgba(80,100,200,.14),rgba(80,100,200,.04)); border:1px solid rgba(120,140,220,.2); }
+
+.scard::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity .3s;
+}
+.scard-car::after   { background:linear-gradient(90deg,transparent,var(--green-lt),transparent); }
+.scard-house::after { background:linear-gradient(90deg,transparent,var(--gold-lt),transparent); }
+.scard-rate::after  { background:linear-gradient(90deg,transparent,#88AAEE,transparent); }
+.scard:hover::after { opacity:1; }
+
+.scard-icon { font-size:38px; margin-bottom:18px; }
+.scard-title { font-size:20px; font-weight:800; color:var(--cream); margin-bottom:8px; }
+.scard-body  { font-size:var(--text-sm); color:var(--muted); line-height:1.7; margin-bottom:20px; }
+
+.scard-compare { display:flex; flex-direction:column; gap:8px; }
+.sc-row {
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(0,0,0,.2); border-radius:8px; padding:10px 14px;
+}
+.sc-score { font-size:12px; font-weight:700; }
+.sc-score.bad  { color:#E07070; }
+.sc-score.good { color:var(--green-lt); }
+.sc-payment { font-family:'Playfair Display',serif; font-size:20px; font-weight:900; }
+.sc-payment.bad  { color:#E07070; }
+.sc-payment.good { color:var(--green-lt); }
+.sc-diff {
+  text-align:center; font-size:14px; font-weight:800; color:var(--gold-lt);
+  padding:8px 0;
+}
+.sc-note { font-size:12px; color:var(--muted); text-align:center; margin-top:4px; }
+
+/* ══════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════ */
+.how-section { padding:88px 48px; background:var(--bg); }
+.how-steps {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:2px; margin-top:48px;
+  border:1px solid var(--faint); border-radius:20px; overflow:hidden;
+}
+.how-col {
+  padding:36px 30px; background:var(--bg2); transition:background .3s;
+}
+.how-col:hover { background:var(--bg3); }
+.how-col + .how-col { border-left:1px solid var(--faint); }
+.how-num {
+  font-family:'Playfair Display',serif; font-size:60px; font-weight:900;
+  color:var(--gold-dim); line-height:1; margin-bottom:20px; display:block;
+}
+.how-title { font-size:20px; font-weight:800; color:var(--cream); margin-bottom:10px; }
+.how-body  { font-size:var(--text-sm); color:var(--muted); line-height:1.7; }
+.how-badge {
+  display:inline-block; margin-top:16px;
+  font-size:12px; font-weight:700; padding:4px 12px; border-radius:100px;
+}
+.badge-green { background:var(--green-dim); color:var(--green-lt); border:1px solid rgba(61,194,120,.2); }
+.badge-gold  { background:var(--gold-dim); color:var(--gold-lt); border:1px solid var(--border); }
+
+/* ══════════════════════════════════════
+   MODULES
+══════════════════════════════════════ */
+.modules-section { padding:88px 48px; background:var(--bg2); border-top:1px solid var(--faint); }
+.modules-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:48px; }
+
+.mod {
+  border-radius:20px; padding:40px 36px; position:relative; overflow:hidden;
+  transition:transform .3s, box-shadow .3s; cursor:default;
+}
+.mod:hover { transform:translateY(-4px); }
+.mod-green {
+  background:linear-gradient(145deg, rgba(30,122,74,.14), rgba(30,122,74,.04));
+  border:1px solid rgba(61,194,120,.2);
+}
+.mod-green:hover { box-shadow:0 24px 60px rgba(30,122,74,.15); }
+.mod-gold {
+  background:linear-gradient(145deg, rgba(212,148,26,.12), rgba(212,148,26,.03));
+  border:1px solid rgba(212,148,26,.2);
+}
+.mod-gold:hover { box-shadow:0 24px 60px rgba(212,148,26,.12); }
+.mod::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity .3s;
+}
+.mod-green::after { background:linear-gradient(90deg,transparent,var(--green-lt),transparent); }
+.mod-gold::after  { background:linear-gradient(90deg,transparent,var(--gold-lt),transparent); }
+.mod:hover::after { opacity:1; }
+
+.mod-icon  { font-size:40px; margin-bottom:20px; }
+.mod-title {
+  font-family:'Playfair Display',serif;
+  font-size:30px; font-weight:900; color:var(--cream); margin-bottom:10px;
+}
+.mod-sub  { font-size:var(--text-sm); color:var(--muted); margin-bottom:24px; line-height:1.75; }
+.mod-list { display:flex; flex-direction:column; gap:10px; margin-bottom:30px; }
+.mod-item {
+  display:flex; align-items:center; gap:12px;
+  font-size:var(--text-sm); color:rgba(245,240,224,.75); font-weight:600;
+}
+.mod-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.green-dot { background:var(--green-lt); }
+.gold-dot  { background:var(--gold-lt); }
+.mod-link {
+  font-size:16px; font-weight:800; display:flex; align-items:center; gap:6px; transition:gap .2s;
+}
+.mod-green .mod-link { color:var(--green-lt); }
+.mod-gold  .mod-link { color:var(--gold-lt); }
+.mod:hover .mod-link { gap:12px; }
+
+/* ══════════════════════════════════════
+   QUIZ
+══════════════════════════════════════ */
+.quiz-section { padding:88px 48px; background:var(--bg); border-top:1px solid var(--faint); }
+.quiz-inner { max-width:640px; margin:0 auto; }
+.quiz-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:24px; padding:48px;
+  position:relative; overflow:hidden; margin-top:40px;
+}
+.quiz-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-lt),transparent);
+}
+
+.quiz-prog { display:flex; gap:8px; margin-bottom:32px; }
+.qp-seg {
+  flex:1; height:4px; border-radius:100px;
+  background:rgba(255,255,255,.08); transition:background .4s;
+}
+.qp-seg.done   { background:var(--gold); }
+.qp-seg.active { background:var(--gold-dim); border:1px solid var(--border); }
+
+.q-step { display:none; }
+.q-step.active { display:block; }
+.q-lbl  { font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.q-title {
+  font-family:'Playfair Display',serif;
+  font-size:26px; font-weight:900; color:var(--cream); margin-bottom:28px; line-height:1.25;
+}
+.q-opts { display:flex; flex-direction:column; gap:10px; }
+.q-opt {
+  background:rgba(255,255,255,.03); border:1.5px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:16px 20px; text-align:left;
+  font-size:var(--text-sm); font-weight:700; color:var(--muted);
+  display:flex; align-items:center; gap:14px;
+  transition:all .2s; cursor:pointer;
+}
+.q-opt:hover {
+  border-color:var(--gold); color:var(--cream);
+  background:var(--gold-dim); transform:translateX(6px);
+}
+.q-opt-icon { font-size:22px; width:32px; text-align:center; flex-shrink:0; }
+
+.q-result { display:none; }
+.q-result.active { display:block; }
+.result-badge {
+  background:var(--green-dim); border:1px solid rgba(61,194,120,.25);
+  border-radius:12px; padding:18px 22px; margin-bottom:20px; text-align:center;
+}
+.rb-label { font-size:12px; color:var(--green-lt); font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.rb-title {
+  font-family:'Playfair Display',serif;
+  font-size:22px; font-weight:900; color:var(--cream); line-height:1.3;
+}
+.result-prods { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+.rp {
+  background:rgba(255,255,255,.03); border:1px solid var(--faint);
+  border-radius:14px; padding:16px 18px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.rp-name { font-size:var(--text-sm); font-weight:800; color:var(--cream); }
+.rp-desc { font-size:13px; color:var(--muted); margin-top:3px; }
+.rp-btn {
+  background:var(--gold); color:#0A0800;
+  padding:9px 18px; border-radius:100px;
+  font-size:13px; font-weight:800; white-space:nowrap;
+  flex-shrink:0; transition:all .2s;
+}
+.rp-btn:hover { background:var(--gold-lt); }
+.q-restart {
+  font-size:var(--text-sm); color:var(--muted); cursor:pointer;
+  text-decoration:underline; text-underline-offset:3px;
+  display:block; text-align:center; margin-top:10px;
+  transition:color .2s; background:none;
+}
+.q-restart:hover { color:var(--cream); }
+
+/* ══════════════════════════════════════
+   TIKTOK
+══════════════════════════════════════ */
+.tiktok-section { padding:88px 48px; background:var(--bg2); border-top:1px solid var(--faint); }
+.tt-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; margin-top:48px; }
+
+.tt-pillar {
+  background:var(--bg3); border:1px solid var(--faint);
+  border-radius:16px; padding:22px 24px;
+  margin-bottom:12px; transition:all .25s;
+}
+.tt-pillar:hover { border-color:var(--border); transform:translateX(5px); }
+.tt-ph { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.tt-pi {
+  width:36px; height:36px; border-radius:10px;
+  background:var(--gold-dim); display:flex; align-items:center; justify-content:center;
+  font-size:18px; flex-shrink:0;
+}
+.tt-pn { font-size:var(--text-sm); font-weight:800; color:var(--cream); }
+.tt-pb { font-size:var(--text-sm); color:var(--muted); line-height:1.6; padding-left:48px; }
+.tt-tag {
+  display:inline-block; font-size:11px; font-weight:800;
+  padding:3px 10px; border-radius:100px; margin-top:8px; margin-left:48px;
+}
+.tag-green { background:var(--green-dim); color:var(--green-lt); }
+.tag-gold  { background:var(--gold-dim);  color:var(--gold-lt); }
+.tag-blue  { background:rgba(80,120,200,.15); color:#88AAEE; }
+
+.tt-phone-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
+.phone {
+  width:252px;
+  background:var(--bg3); border:2px solid rgba(255,255,255,.1);
+  border-radius:40px; overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.6);
+}
+.phone-bar { width:80px; height:24px; border-radius:0 0 16px 16px; background:var(--bg); margin:0 auto; }
+.phone-vid {
+  padding:0 12px 20px;
+  background:linear-gradient(180deg,#0E0C04 0%,#131008 100%);
+  min-height:440px; position:relative; display:flex; flex-direction:column; justify-content:flex-end;
+}
+.vid-glow {
+  position:absolute; top:24px; left:50%; transform:translateX(-50%);
+  text-align:center; width:100%;
+}
+.vid-number {
+  font-family:'Playfair Display',serif;
+  font-size:82px; font-weight:900; color:var(--gold-lt); line-height:1;
+  text-shadow:0 0 50px rgba(212,148,26,.5);
+}
+.vid-label   { font-size:13px; color:var(--cream); font-weight:700; }
+.vid-sub     { font-size:11px; color:var(--muted); }
+
+.vid-side {
+  position:absolute; right:10px; bottom:90px;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+.vid-btn { font-size:22px; text-align:center; }
+.vid-btn-label { font-size:9px; color:rgba(245,240,224,.7); font-weight:700; }
+
+.vid-bottom { position:relative; z-index:2; }
+.vid-user { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.vid-avatar {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--green),var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:900; color:#0A0800;
+}
+.vid-username { font-size:13px; font-weight:800; color:var(--cream); }
+.vid-caption  { font-size:12px; color:rgba(245,240,224,.85); line-height:1.5; margin-bottom:8px; }
+.vid-hashtags { font-size:10px; color:#69C9D0; line-height:1.8; }
+
+.tt-rules {
+  background:var(--bg2); border:1px solid var(--faint);
+  border-radius:14px; padding:20px; width:252px;
+}
+.tt-rules-title { font-size:12px; font-weight:800; color:var(--gold-lt); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase; }
+.tt-rule { display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--muted); margin-bottom:8px; line-height:1.5; font-weight:600; }
+.tt-rule-dot { color:var(--gold-lt); flex-shrink:0; }
+
+/* ══════════════════════════════════════
+   NEWSLETTER / PDF
+══════════════════════════════════════ */
+.nl-section { padding:88px 48px; background:var(--bg); border-top:1px solid var(--faint); }
+.nl-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+
+.pdf-stack { position:relative; width:260px; }
+.pdf-behind {
+  position:absolute; width:220px; height:300px;
+  background:var(--bg2); border:1px solid var(--faint);
+  border-radius:14px; bottom:-14px; right:-14px;
+}
+.pdf-main {
+  position:relative; z-index:2; width:242px;
+  background:linear-gradient(150deg,#1E1A08,#141008);
+  border:1px solid var(--border); border-radius:18px;
+  padding:30px 26px; box-shadow:0 24px 60px rgba(0,0,0,.5);
+}
+.pdf-main::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  border-radius:18px 18px 0 0;
+  background:linear-gradient(90deg,transparent,var(--gold-lt),transparent);
+}
+.pdf-pill {
+  position:absolute; top:-12px; right:20px;
+  background:var(--gold); color:#0A0800;
+  font-size:11px; font-weight:900; padding:4px 14px; border-radius:100px;
+}
+.pdf-emoji { font-size:38px; margin-bottom:16px; }
+.pdf-title {
+  font-family:'Playfair Display',serif;
+  font-size:18px; font-weight:900; color:var(--cream); margin-bottom:6px; line-height:1.3;
+}
+.pdf-meta { font-size:12px; color:var(--muted); margin-bottom:18px; font-weight:600; }
+.pdf-toc  { display:flex; flex-direction:column; gap:8px; }
+.pdf-ch   { display:flex; align-items:center; gap:10px; font-size:12px; color:rgba(245,240,224,.65); font-weight:600; }
+.pdf-ch-n {
+  width:22px; height:22px; border-radius:50%; flex-shrink:0;
+  background:var(--gold-dim); display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:900; color:var(--gold-lt);
+}
+
+.nl-benefits { display:flex; flex-direction:column; gap:14px; margin:28px 0 30px; }
+.nlb { display:flex; align-items:flex-start; gap:12px; }
+.nlb-check {
+  width:22px; height:22px; border-radius:50%; flex-shrink:0;
+  background:var(--green-dim); border:1px solid rgba(61,194,120,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:var(--green-lt); margin-top:2px; font-weight:900;
+}
+.nlb-text { font-size:var(--text-sm); color:var(--muted); line-height:1.6; font-weight:600; }
+.nlb-text strong { color:var(--cream); }
+
+.nl-input-wrap {
+  display:flex; gap:8px;
+  background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.12);
+  border-radius:100px; padding:6px 6px 6px 22px;
+  transition:border-color .2s; margin-bottom:12px;
+}
+.nl-input-wrap:focus-within { border-color:var(--gold); }
+.nl-input-wrap input {
+  flex:1; background:transparent; font-size:var(--text-sm); color:var(--cream);
+  min-width:0; font-weight:600;
+}
+.nl-input-wrap input::placeholder { color:var(--muted); }
+.nl-submit {
+  background:var(--gold); color:#0A0800;
+  padding:12px 24px; border-radius:100px;
+  font-size:var(--text-sm); font-weight:800; white-space:nowrap; flex-shrink:0;
+  transition:all .2s;
+}
+.nl-submit:hover { background:var(--gold-lt); }
+.nl-fine { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:6px; font-weight:600; }
+
+.nl-ok {
+  display:none; text-align:center; padding:36px 24px;
+  background:var(--green-dim); border:1px solid rgba(61,194,120,.2); border-radius:16px;
+}
+.nl-ok.show { display:block; }
+.nl-ok .ok-icon { font-size:48px; margin-bottom:12px; }
+.nl-ok h4 { font-family:'Playfair Display',serif; font-size:26px; color:var(--cream); margin-bottom:8px; }
+.nl-ok p  { font-size:var(--text-sm); color:var(--muted); font-weight:600; }
+
+/* ══════════ FOOTER ══════════ */
+footer { background:var(--bg); border-top:1px solid var(--faint); padding:48px; }
+.footer-row {
+  max-width:1080px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+}
+.footer-logo { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:var(--gold-lt); }
+.footer-logo span { color:var(--cream); font-weight:700; }
+.footer-links { display:flex; gap:24px; flex-wrap:wrap; }
+.footer-links a { font-size:var(--text-sm); color:var(--muted); transition:color .2s; font-weight:700; }
+.footer-links a:hover { color:var(--cream); }
+.footer-disc {
+  width:100%; font-size:13px; color:rgba(245,240,224,.28); line-height:1.7; font-weight:600;
+  border-top:1px solid var(--faint); padding-top:20px; margin-top:8px;
+}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:900px){
+  nav { padding:14px 24px; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; padding:100px 24px 60px; gap:40px; }
+  .hero-right { order:-1; }
+  section,
+  .how-section,.modules-section,.quiz-section,
+  .tiktok-section,.nl-section,.savings-section { padding:64px 24px; }
+  .savings-grid, .how-steps { grid-template-columns:1fr; }
+  .how-col + .how-col { border-left:none; border-top:1px solid var(--faint); }
+  .modules-grid,.tt-grid,.nl-grid { grid-template-columns:1fr; gap:40px; }
+  .quiz-card { padding:28px 20px; }
+  .hph-compare { grid-template-columns:1fr; }
+  .hph-arrow { transform:rotate(90deg); justify-self:center; }
+  footer { padding:32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Iníciate<span>.us</span></div>
+  <div class="nav-links">
+    <a href="#ahorros">¿Por qué importa?</a>
+    <a href="#modulos">Guías</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#guia">PDF Gratis</a>
+  </div>
+  <a href="#quiz" class="nav-btn">Empezar gratis →</a>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="live-dot"></div>
+      Para la comunidad hispana en EE.UU.
+    </div>
+
+    <h1>
+      Buen crédito =
+      <span class="block gold">pagar menos</span>
+      cada mes.
+    </h1>
+
+    <!-- THE KEY MESSAGE -->
+    <div class="hero-payment-hook">
+      <div class="hph-title">💡 Lo que nadie te explica</div>
+      <div class="hph-compare">
+        <div class="hph-bad">
+          <div class="hph-label">Score bajo (580)</div>
+          <div class="hph-amount">$850</div>
+          <div class="hph-desc">mensual por tu carro</div>
+        </div>
+        <div class="hph-arrow">→</div>
+        <div class="hph-good">
+          <div class="hph-label">Score alto (750+)</div>
+          <div class="hph-amount">$520</div>
+          <div class="hph-desc">mensual por tu carro</div>
+        </div>
+      </div>
+      <div class="hph-footer">El mismo carro. <strong>$330 menos al mes</strong> solo por tener buen crédito.</div>
+    </div>
+
+    <p class="hero-sub">
+      En iniciate.us te enseñamos el sistema exacto para construir crédito en EE.UU. desde cero — en español, sin rodeos, sin costos escondidos.
+    </p>
+
+    <div class="cta-row">
+      <a href="#quiz" class="btn-gold">¿Por dónde empiezo? →</a>
+      <a href="#guia" class="btn-ghost">📄 Guía PDF gratis</a>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-flags">🇲🇽 🇨🇴 🇬🇹 🇵🇪 🇩🇴</div>
+      <div class="trust-text">
+        <strong>Con SSN o con ITIN</strong><br>
+        Para toda la comunidad hispana en EE.UU.
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD CARD -->
+  <div class="hero-right">
+    <div class="method-card">
+      <div class="mc-label">El sistema — resultado real</div>
+
+      <div class="score-hero">
+        <div class="score-big" id="scoreNum">0</div>
+        <div class="score-side">
+          <div class="score-label">Credit Score</div>
+          <div class="score-range">Escala 300–850</div>
+        </div>
+      </div>
+
+      <div class="score-bar-wrap">
+        <div class="score-bar-track">
+          <div class="score-bar-fill" id="scoreBar"></div>
+        </div>
+        <div class="score-bar-labels">
+          <span>300 — Ninguno</span>
+          <span>801 — Excelente ✦</span>
+        </div>
+      </div>
+
+      <!-- SAVINGS -->
+      <div class="savings-boxes">
+        <div class="sbox">
+          <div class="sbox-icon">🚗</div>
+          <div class="sbox-label">Carro (5 años)</div>
+          <div class="sbox-save">-$330/mes</div>
+          <div class="sbox-desc">vs. score bajo</div>
+        </div>
+        <div class="sbox">
+          <div class="sbox-icon">🏠</div>
+          <div class="sbox-label">Casa (30 años)</div>
+          <div class="sbox-save">-$500/mes</div>
+          <div class="sbox-desc">vs. score bajo</div>
+        </div>
+      </div>
+
+      <!-- STEPS -->
+      <div class="mc-steps">
+        <div class="mcs">
+          <div class="mcs-num done">✓</div>
+          <div>
+            <div class="mcs-title">Cuenta base + tarjeta asegurada</div>
+            <div class="mcs-sub">Mes 1 · Sin historial requerido</div>
+          </div>
+          <div class="mcs-score dim">—</div>
+        </div>
+        <div class="mcs">
+          <div class="mcs-num done">✓</div>
+          <div>
+            <div class="mcs-title">Credit-builder loan (Self Inc.)</div>
+            <div class="mcs-sub">Mes 1–2 · Acepta ITIN</div>
+          </div>
+          <div class="mcs-score">~580</div>
+        </div>
+        <div class="mcs">
+          <div class="mcs-num done">✓</div>
+          <div>
+            <div class="mcs-title">Pagos puntuales + baja utilización</div>
+            <div class="mcs-sub">Meses 3–8</div>
+          </div>
+          <div class="mcs-score">650–700</div>
+        </div>
+        <div class="mcs">
+          <div class="mcs-num active">→</div>
+          <div>
+            <div class="mcs-title">Diversificar + mantener</div>
+            <div class="mcs-sub">Mes 9+</div>
+          </div>
+          <div class="mcs-score">700–801</div>
+        </div>
+      </div>
+
+      <div class="mc-proof">
+        <span>✦</span>
+        <div>Sigue este sistema y llegas a <strong>801</strong>. La velocidad depende de ti — el camino es este.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SAVINGS — CORE MESSAGE ════════ -->
+<section class="savings-section" id="ahorros">
+  <div class="max">
+    <span class="section-tag reveal">¿Por qué importa el crédito?</span>
+    <h2 class="section-h reveal">No es un número.<br>Es cuánto pagas al mes.</h2>
+    <p class="section-sub reveal" style="max-width:580px">En EE.UU., tu credit score determina directamente cuánto te cobran de mensualidad en el carro, la casa y las tarjetas. El mismo producto puede costarte el doble si tienes mal crédito.</p>
+
+    <div class="savings-grid">
+      <div class="scard scard-car reveal">
+        <div class="scard-icon">🚗</div>
+        <div class="scard-title">Préstamo de carro</div>
+        <div class="scard-body">El mismo carro de $32,000 financiado a 60 meses puede costarte $330 más al mes si tu score es bajo — eso es casi $20,000 extra en 5 años.</div>
+        <div class="scard-compare">
+          <div class="sc-row">
+            <span class="sc-score bad">Score 580 — malo</span>
+            <span class="sc-payment bad">$850/mes</span>
+          </div>
+          <div class="sc-diff">⬇ Ahorras $330 al mes</div>
+          <div class="sc-row">
+            <span class="sc-score good">Score 750 — excelente</span>
+            <span class="sc-payment good">$520/mes</span>
+          </div>
+          <div class="sc-note">Carro de $32,000 · 60 meses · estimado</div>
+        </div>
+      </div>
+
+      <div class="scard scard-house reveal">
+        <div class="scard-icon">🏠</div>
+        <div class="scard-title">Mortgage (hipoteca)</div>
+        <div class="scard-body">Una diferencia de 150 puntos en tu score puede significar $500 menos al mes en tu pago de casa — más de $180,000 en el tiempo del préstamo.</div>
+        <div class="scard-compare">
+          <div class="sc-row">
+            <span class="sc-score bad">Score 620 — regular</span>
+            <span class="sc-payment bad">$1,850/mes</span>
+          </div>
+          <div class="sc-diff">⬇ Ahorras $500 al mes</div>
+          <div class="sc-row">
+            <span class="sc-score good">Score 760 — excelente</span>
+            <span class="sc-payment good">$1,350/mes</span>
+          </div>
+          <div class="sc-note">Casa de $280,000 · 30 años · estimado</div>
+        </div>
+      </div>
+
+      <div class="scard scard-rate reveal">
+        <div class="scard-icon">💳</div>
+        <div class="scard-title">Tarjetas y préstamos</div>
+        <div class="scard-body">Con score alto consigues tarjetas sin cuota anual, con cashback, y tasas de interés que pueden ser hasta 3 veces menores que con mal crédito.</div>
+        <div class="scard-compare">
+          <div class="sc-row">
+            <span class="sc-score bad">Score bajo — tasa 28%</span>
+            <span class="sc-payment bad">$280/mes</span>
+          </div>
+          <div class="sc-diff">⬇ Ahorras $150 al mes</div>
+          <div class="sc-row">
+            <span class="sc-score good">Score alto — tasa 12%</span>
+            <span class="sc-payment good">$130/mes</span>
+          </div>
+          <div class="sc-note">Saldo de $10,000 · estimado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ HOW IT WORKS ════════ -->
+<section class="how-section" id="como">
+  <div class="max">
+    <span class="section-tag reveal">Cómo funciona</span>
+    <h2 class="section-h reveal">Tres pasos.<br>Un destino.</h2>
+    <p class="section-sub reveal" style="max-width:500px">No necesitas saber de finanzas. Solo necesitas seguir el orden correcto.</p>
+
+    <div class="how-steps reveal">
+      <div class="how-col">
+        <span class="how-num">01</span>
+        <div class="how-title">Haz el quiz gratis</div>
+        <div class="how-body">3 preguntas sobre tu situación: cuánto tiempo llevas, si tienes SSN o ITIN, y cuál es tu meta. Te decimos exactamente por dónde empezar.</div>
+        <span class="how-badge badge-gold">30 segundos</span>
+      </div>
+      <div class="how-col">
+        <span class="how-num">02</span>
+        <div class="how-title">Elige tu producto</div>
+        <div class="how-body">Te mostramos las mejores opciones para tu perfil — tarjeta asegurada, credit-builder loan, o combinación. Honestos sobre pros, contras y costos.</div>
+        <span class="how-badge badge-green">Personalizado para ti</span>
+      </div>
+      <div class="how-col">
+        <span class="how-num">03</span>
+        <div class="how-title">Sigue el plan</div>
+        <div class="how-body">Descarga la guía PDF de 90 días. Paga puntual, mantén baja la utilización, y observa cómo tu mensualidad de carro y casa baja mes a mes.</div>
+        <span class="how-badge badge-gold">PDF 100% gratis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ MODULES ════════ -->
+<section class="modules-section" id="modulos">
+  <div class="max">
+    <span class="section-tag reveal">Lo que encontrarás aquí</span>
+    <h2 class="section-h reveal">Crédito y seguro.<br>Los dos pilares.</h2>
+
+    <div class="modules-grid">
+      <div class="mod mod-green reveal">
+        <div class="mod-icon">📗</div>
+        <div class="mod-title">Construye tu crédito</div>
+        <div class="mod-sub">Desde cero historial hasta score 700+ — para pagar menos por tu carro, tu casa, y todo lo demás.</div>
+        <div class="mod-list">
+          <div class="mod-item"><div class="mod-dot green-dot"></div>Tarjetas aseguradas — Chime, Discover, Capital One</div>
+          <div class="mod-item"><div class="mod-dot green-dot"></div>Credit-builder loans — Self Inc., Credit Strong</div>
+          <div class="mod-item"><div class="mod-dot green-dot"></div>Cómo construir crédito solo con ITIN</div>
+          <div class="mod-item"><div class="mod-dot green-dot"></div>Reviews honestos — pros, contras y costos reales</div>
+        </div>
+        <div class="mod-link">Ver guías de crédito <span>→</span></div>
+      </div>
+
+      <div class="mod mod-gold reveal">
+        <div class="mod-icon">🚗</div>
+        <div class="mod-title">Seguro de auto</div>
+        <div class="mod-sub">Con o sin SSN. Con licencia mexicana. Con ITIN. Qué aseguradoras trabajan con inmigrantes — y cómo pagar la menor mensualidad posible.</div>
+        <div class="mod-list">
+          <div class="mod-item"><div class="mod-dot gold-dot"></div>Seguro sin SSN — Progressive, GAINSCO, Dairyland</div>
+          <div class="mod-item"><div class="mod-dot gold-dot"></div>Con licencia mexicana o de otro país</div>
+          <div class="mod-item"><div class="mod-dot gold-dot"></div>Comparativas por estado (TX, FL, NY, CA)</div>
+          <div class="mod-item"><div class="mod-dot gold-dot"></div>Habla con un agente que habla español</div>
+        </div>
+        <div class="mod-link">Ver guías de seguros <span>→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ QUIZ ════════ -->
+<section class="quiz-section" id="quiz">
+  <div class="quiz-inner">
+    <span class="section-tag reveal" style="display:block;text-align:center">Quiz gratuito</span>
+    <h2 class="section-h reveal" style="text-align:center">¿Cuál es el mejor<br>producto para ti?</h2>
+    <p class="section-sub reveal" style="text-align:center;margin:0 auto;max-width:420px">3 preguntas. Tu recomendación exacta.</p>
+
+    <div class="quiz-card reveal">
+      <div class="quiz-prog">
+        <div class="qp-seg active" id="seg1"></div>
+        <div class="qp-seg" id="seg2"></div>
+        <div class="qp-seg" id="seg3"></div>
+      </div>
+
+      <div class="q-step active" id="step1">
+        <div class="q-lbl">Pregunta 1 de 3</div>
+        <div class="q-title">¿Cuánto tiempo llevas en EE.UU.?</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="ans(1,'new')"><div class="q-opt-icon">🌱</div>Menos de 6 meses</button>
+          <button class="q-opt" onclick="ans(1,'mid')"><div class="q-opt-icon">📅</div>Entre 6 meses y 2 años</button>
+          <button class="q-opt" onclick="ans(1,'est')"><div class="q-opt-icon">🏠</div>Más de 2 años</button>
+        </div>
+      </div>
+
+      <div class="q-step" id="step2">
+        <div class="q-lbl">Pregunta 2 de 3</div>
+        <div class="q-title">¿Qué documento de identificación tienes?</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="ans(2,'ssn')"><div class="q-opt-icon">🪪</div>Tengo SSN</button>
+          <button class="q-opt" onclick="ans(2,'itin')"><div class="q-opt-icon">📄</div>Solo tengo ITIN</button>
+          <button class="q-opt" onclick="ans(2,'none')"><div class="q-opt-icon">🌐</div>Por ahora ninguno</button>
+        </div>
+      </div>
+
+      <div class="q-step" id="step3">
+        <div class="q-lbl">Pregunta 3 de 3</div>
+        <div class="q-title">¿Cuál es tu meta principal ahora?</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="ans(3,'rent')"><div class="q-opt-icon">🏠</div>Poder rentar apartamento</button>
+          <button class="q-opt" onclick="ans(3,'car')"><div class="q-opt-icon">🚗</div>Pagar menos por mi carro o seguro</button>
+          <button class="q-opt" onclick="ans(3,'house')"><div class="q-opt-icon">🏡</div>Calificar para una casa (mortgage)</button>
+          <button class="q-opt" onclick="ans(3,'start')"><div class="q-opt-icon">🚀</div>Simplemente empezar</button>
+        </div>
+      </div>
+
+      <div class="q-result" id="qResult">
+        <div class="result-badge">
+          <div class="rb-label">Tu recomendación</div>
+          <div class="rb-title" id="rTitle"></div>
+        </div>
+        <div class="result-prods" id="rProds"></div>
+        <button class="q-restart" onclick="resetQuiz()">← Volver a empezar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TIKTOK ════════ -->
+<section class="tiktok-section">
+  <div class="max">
+    <span class="section-tag reveal">TikTok @iniciateUS</span>
+    <h2 class="section-h reveal">Un tip por día.<br>En español. Gratis.</h2>
+    <p class="section-sub reveal" style="max-width:500px">3–5 videos por semana sobre crédito y seguros para inmigrantes. El contenido que nadie más da en español.</p>
+
+    <div class="tt-grid">
+      <div class="reveal">
+        <div class="tt-pillar">
+          <div class="tt-ph"><div class="tt-pi">📈</div><div class="tt-pn">El sistema paso a paso</div></div>
+          <div class="tt-pb">Qué abrir primero, cuándo, y por qué. El orden exacto para llegar a 700+ sin perder dinero en el camino.</div>
+          <span class="tt-tag tag-gold">Pilar principal</span>
+        </div>
+        <div class="tt-pillar">
+          <div class="tt-ph"><div class="tt-pi">💸</div><div class="tt-pn">Cuánto ahorras con buen crédito</div></div>
+          <div class="tt-pb">Videos concretos: el mismo carro cuesta $330 menos al mes. La misma casa cuesta $500 menos. Números reales que la gente comparte.</div>
+          <span class="tt-tag tag-green">Alto alcance</span>
+        </div>
+        <div class="tt-pillar">
+          <div class="tt-ph"><div class="tt-pi">📄</div><div class="tt-pn">Solo tengo ITIN — ¿qué puedo hacer?</div></div>
+          <div class="tt-pb">Para indocumentados y personas sin SSN. Audiencia muy agradecida. Altísimo compartido en grupos de Facebook.</div>
+          <span class="tt-tag tag-blue">Nicho de alta intención</span>
+        </div>
+        <div class="tt-pillar">
+          <div class="tt-ph"><div class="tt-pi">🚗</div><div class="tt-pn">Seguro sin SSN / licencia mexicana</div></div>
+          <div class="tt-pb">Cross entre módulos. CTA al formulario del agente de seguros.</div>
+          <span class="tt-tag tag-gold">Cross-sell</span>
+        </div>
+      </div>
+
+      <div class="tt-phone-wrap reveal">
+        <div class="phone">
+          <div class="phone-bar"></div>
+          <div class="phone-vid">
+            <div class="vid-glow">
+              <div class="vid-number">801</div>
+              <div class="vid-label">Credit Score</div>
+              <div class="vid-sub">el resultado del sistema</div>
+            </div>
+            <div class="vid-side">
+              <div class="vid-btn">❤️<div class="vid-btn-label">48K</div></div>
+              <div class="vid-btn">💬<div class="vid-btn-label">1.2K</div></div>
+              <div class="vid-btn">↗️<div class="vid-btn-label">Compartir</div></div>
+            </div>
+            <div class="vid-bottom">
+              <div class="vid-user">
+                <div class="vid-avatar">I</div>
+                <div class="vid-username">@iniciateUS</div>
+              </div>
+              <div class="vid-caption">El mismo carro: $330 más al mes con mal crédito. Esto es lo que nadie te explica 👇</div>
+              <div class="vid-hashtags">#creditoscore #inmigrantes #hispanos #finanzas #estadosunidos</div>
+            </div>
+          </div>
+        </div>
+        <div class="tt-rules">
+          <div class="tt-rules-title">Reglas del canal</div>
+          <div class="tt-rule"><div class="tt-rule-dot">·</div>3–5 videos por semana, sin falta</div>
+          <div class="tt-rule"><div class="tt-rule-dot">·</div>Siempre en español</div>
+          <div class="tt-rule"><div class="tt-rule-dot">·</div>CTA al final: "Link en bio → iniciate.us"</div>
+          <div class="tt-rule"><div class="tt-rule-dot">·</div>Graba en batch: 4 videos en 1 hora</div>
+          <div class="tt-rule"><div class="tt-rule-dot">·</div>Republica en Instagram como Reels</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ NEWSLETTER ════════ -->
+<section class="nl-section" id="guia">
+  <div class="max">
+    <div class="nl-grid">
+      <div class="reveal">
+        <div class="pdf-stack">
+          <div class="pdf-behind"></div>
+          <div class="pdf-main">
+            <div class="pdf-pill">GRATIS</div>
+            <div class="pdf-emoji">📘</div>
+            <div class="pdf-title">Construye tu crédito en 90 días</div>
+            <div class="pdf-meta">Plan paso a paso · 24 páginas · En español</div>
+            <div class="pdf-toc">
+              <div class="pdf-ch"><div class="pdf-ch-n">1</div>Por qué el crédito baja tu mensualidad</div>
+              <div class="pdf-ch"><div class="pdf-ch-n">2</div>Qué abrir primero y en qué orden</div>
+              <div class="pdf-ch"><div class="pdf-ch-n">3</div>Plan exacto día 1 al día 90</div>
+              <div class="pdf-ch"><div class="pdf-ch-n">4</div>Los errores que arruinan el crédito</div>
+              <div class="pdf-ch"><div class="pdf-ch-n">5</div>Qué hacer cuando llegas a 700+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="section-tag">Guía gratuita</span>
+        <h2 class="section-h" style="font-size:clamp(32px,4vw,50px)">El mapa completo.<br>Sin costos escondidos.</h2>
+        <p class="section-sub">El plan de 90 días para construir crédito en EE.UU. y empezar a pagar menos cada mes — en casa, en el carro, en todo.</p>
+
+        <div class="nl-benefits">
+          <div class="nlb">
+            <div class="nlb-check">✓</div>
+            <div class="nlb-text"><strong>90 días con fechas y productos específicos</strong> — no teoría, pasos concretos</div>
+          </div>
+          <div class="nlb">
+            <div class="nlb-check">✓</div>
+            <div class="nlb-text"><strong>Funciona con ITIN y con SSN</strong> — sección especial para cada caso</div>
+          </div>
+          <div class="nlb">
+            <div class="nlb-check">✓</div>
+            <div class="nlb-text"><strong>Sin propaganda</strong> — solo los productos que el sistema requiere</div>
+          </div>
+          <div class="nlb">
+            <div class="nlb-check">✓</div>
+            <div class="nlb-text"><strong>Newsletter semanal gratis</strong> — tips reales y respuestas de la comunidad</div>
+          </div>
+        </div>
+
+        <form id="nlForm" name="guia-pdf" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleNLSubmit(event)">
+          <input type="hidden" name="form-name" value="guia-pdf" />
+          <p style="display:none"><input name="bot-field" /></p>
+          <div class="nl-input-wrap">
+            <input type="email" name="email" id="nlEmail" placeholder="tu@email.com" required />
+            <button type="submit" class="nl-submit">Descargar gratis →</button>
+          </div>
+          <div class="nl-fine">🔒 Sin spam. Cancela cuando quieras.</div>
+        </form>
+        <div class="nl-ok" id="nlOk">
+          <div class="ok-icon">✅</div>
+          <h4>¡Ya está en tu bandeja!</h4>
+          <p>Revisa tu email en los próximos 2 minutos. Si no llega, revisa spam.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-row">
+    <div class="footer-logo">Iníciate<span>.us</span></div>
+    <div class="footer-links">
+      <a href="#">Crédito</a><a href="#">Seguros</a>
+      <a href="#">Quiz</a><a href="#">Blog</a>
+      <a href="#">TikTok</a><a href="/cdn-cgi/l/email-protection#fa9295969bba93949399939b8e9fd48f89">Contacto</a>
+    </div>
+    <div class="footer-disc">
+      Iniciate.us es un sitio independiente de educación financiera para la comunidad hispana en EE.UU. Los links a productos de terceros pueden generar comisiones de afiliado sin costo adicional para el usuario. El contenido es informativo y no constituye asesoría financiera. Los resultados de crédito varían según el historial y comportamiento de cada persona. Los valores de mensualidad mostrados son estimados ilustrativos.
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* score animation */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('scoreBar').style.width = '94%';
+    countUp('scoreNum', 0, 801, 2200);
+  }, 500);
+});
+function countUp(id, from, to, ms) {
+  const el = document.getElementById(id);
+  const t0 = performance.now();
+  (function tick(now) {
+    const t = Math.min((now - t0) / ms, 1);
+    const e = 1 - Math.pow(1 - t, 4);
+    el.textContent = Math.round(from + (to - from) * e);
+    if (t < 1) requestAnimationFrame(tick);
+  })(performance.now());
+}
+
+/* scroll reveal */
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: 0.1, rootMargin:'0px 0px -30px 0px' }
+);
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* quiz */
+const A = {};
+function ans(step, val) {
+  A[step] = val;
+  document.getElementById('seg' + step).classList.replace('active','done');
+  if (step < 3) {
+    document.getElementById('step' + step).classList.remove('active');
+    document.getElementById('step' + (step+1)).classList.add('active');
+    document.getElementById('seg' + (step+1)).classList.add('active');
+  } else {
+    document.getElementById('step3').classList.remove('active');
+    buildResult();
+  }
+}
+
+function buildResult() {
+  let title, prods;
+  if (A[2] === 'none') {
+    title = 'Primero: consigue tu ITIN y una cuenta básica';
+    prods = [
+      { name:'Solicitar ITIN', desc:'Con ITIN abres muchas puertas. Proceso con el IRS, sin costo.', btn:'Cómo hacerlo' },
+      { name:'Chime Checking', desc:'Cuenta sin revisión de crédito. Base para empezar.', btn:'Ver Chime' }
+    ];
+  } else if (A[2] === 'itin') {
+    title = 'Tu ruta: Self Inc. + tarjeta asegurada con ITIN';
+    prods = [
+      { name:'Self Inc. Credit Builder', desc:'Acepta ITIN. Desde $25/mes. Reporta a las 3 agencias.', btn:'Abrir cuenta →' },
+      { name:'Chime Credit Builder', desc:'Sin revisión de crédito. Compatible con ITIN.', btn:'Ver Chime →' }
+    ];
+  } else if (A[3] === 'car') {
+    title = 'Baja tu mensualidad: crédito + seguro juntos';
+    prods = [
+      { name:'Chime Credit Builder', desc:'Empieza a construir historial hoy. Sin depósito mínimo.', btn:'Abrir Chime →' },
+      { name:'Cotizar seguro de auto', desc:'Con o sin SSN. Compara Progressive, GAINSCO, Dairyland.', btn:'Ver opciones →' }
+    ];
+  } else if (A[3] === 'house') {
+    title = 'Para el mortgage necesitas score 620+ — empieza hoy';
+    prods = [
+      { name:'Self Inc. + Tarjeta Asegurada', desc:'La combinación más rápida para llegar a 650–700 en 12 meses.', btn:'Ver plan →' },
+      { name:'Discover it Secured', desc:'Sin cuota anual. Upgrade automático a los 7 meses.', btn:'Aplicar →' }
+    ];
+  } else if (A[1] === 'new' || A[1] === 'mid') {
+    title = 'Tarjeta asegurada + préstamo de crédito: la base';
+    prods = [
+      { name:'Chime Credit Builder', desc:'Sin depósito fijo. Sin cuota anual. Sin revisión de crédito.', btn:'Abrir Chime →' },
+      { name:'Self Inc.', desc:'Complementa tu tarjeta. $25/mes, reporta a las 3 agencias.', btn:'Abrir Self →' }
+    ];
+  } else {
+    title = 'Tienes base — hora de escalar el score';
+    prods = [
+      { name:'Discover it Secured', desc:'Score 600+: 2% cashback + upgrade automático a los 7 meses.', btn:'Aplicar →' },
+      { name:'Capital One Quicksilver', desc:'Para cuando llegues a 650+. Sin cuota anual.', btn:'Ver opciones' }
+    ];
+  }
+  document.getElementById('rTitle').textContent = title;
+  document.getElementById('rProds').innerHTML = prods.map(p =>
+    `<div class="rp"><div><div class="rp-name">${p.name}</div><div class="rp-desc">${p.desc}</div></div><button class="rp-btn">${p.btn}</button></div>`
+  ).join('');
+  document.getElementById('qResult').classList.add('active');
+}
+
+function resetQuiz() {
+  ['seg1','seg2','seg3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'qp-seg';
+  });
+  document.getElementById('seg1').classList.add('active');
+  ['step1','step2','step3'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('qResult').classList.remove('active');
+  A[1]=A[2]=A[3]=null;
+}
+
+/* newsletter — Netlify Form handler */
+function handleNLSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('nlForm');
+  const data = new FormData(form);
+  fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: new URLSearchParams(data).toString() })
+    .then(() => {
+      form.style.display = 'none';
+      document.getElementById('nlOk').classList.add('show');
+    })
+    .catch(() => { form.submit(); });
+}
+</script>
+</body>
+</html>
